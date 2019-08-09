@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo3.mapper.SeckillMapper">
+
+    <!--    //注意修改 namespace 的包位置-->
+    <select id="queryById" resultType="com.example.demo3.bean.Seckill">
+  select * from seckill where seckill_id = #{seckillId}
+</select>
+
+    <select id="queryAll" resultType="com.example.demo3.bean.Seckill">
+  select * from seckill
+  order by create_time desc limit #{offset},#{limit}
+</select>
+
+    <select id="findAll" resultType="com.example.demo3.bean.Seckill">
+        SELECT * FROM seckill
+    </select>
+
+    <update id="reduceNumber">
+        UPDATE seckill
+        SET number = number-1
+        WHERE seckill_id=#{seckillId}
+        AND start_time <![CDATA[ <= ]]> #{killTime}
+        AND end_time >= #{killTime}
+        AND number > 0;
+    </update>
+
+</mapper>
