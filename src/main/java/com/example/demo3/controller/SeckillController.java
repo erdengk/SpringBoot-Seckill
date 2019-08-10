@@ -34,11 +34,7 @@ public class SeckillController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping("/ss")
-    public String s()
-    {
-        return "1";
-    }
+
     @RequestMapping(value = "/list" ,method = RequestMethod.GET)
     public String list(Model model)
     {

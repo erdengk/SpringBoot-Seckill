@@ -16,59 +16,41 @@
     <!-- header -->
     <div th:replace="public/header :: header"></div>
 
-    <!-- main -->
-    <div id="main">
-        <div>
-            <div class="container">
-                <div class="container">
-<!--                    <div class="fl preview-wrap">-->
-<!--                        <div id="preview" class="spec-preview">-->
-<!--                            <span class="jqzoom"><img th:src="${seckill.image}" alt=""/></span>-->
-<!--                        </div>-->
-<!--                    </div>-->
 
-                    <div class="fr itemInfo-wrap">
-                        <div class="sku-name">
-                            <h4 th:text="${seckill.name}"></h4>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1 th:text="${seckill.name}">
+                    </h1>
+                </div>
+                <div class="row-fluid">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-8">
+                        剩余库存：<b th:text="${seckill.number}"  style="font-size: 15px;"></b>
+                        <div>
+                            <span style="font-size: 15px;">开始时间：[[${#dates.format(seckill.startTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
                         </div>
-<!--                        <div class="news">-->
-<!--                            <span><img th:src="@{../../lib/font/icon/clock.png}"/>精品秒杀</span>-->
-<!--                        </div>-->
-                        <div class="summary">
-                            <div class="summary-wrap">
-
-                                <div class="fl title">
-                                    <i>秒杀价</i>
-                                </div>
-<!--                                <div class="fl price">-->
-<!--                                    <i>¥</i>-->
-<!--                                    <b th:text="${seckill.costPrice}"></b>-->
-<!--                                    <span>原价：<b th:text="${seckill.price}"></b></span>-->
-<!--                                </div>-->
-                                <div class="fr remark">
-                                    剩余库存：<b th:text="${seckill.number}"></b>
-                                    startTime ：<b th:text="${seckill.startTime}"></b>
-                                    endTime ：<b th:text="${seckill.endTime}"></b>
-                                    createTime  ：<b th:text="${seckill.createTime}"></b>
-                                </div>
-                            </div>
+                        <div>
+                            <span style="font-size: 15px;">结束时间：[[${#dates.format(seckill.endTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
                         </div>
-                        <br/>
-                        <div class="text-center">
-                            <div style="color: #ff0000d9;">
-                                <h2>
-                                    <span id="seckill-time-span"></span>
-                                    <br/>
-                                    <br/>
-                                    <span id="seckill-box"></span>
-                                </h2>
-                            </div>
+                        <div style="color: #ff0000d9;">
+                            <h2>
+                                <span id="seckill-time-span"></span>
+                                <br/>
+                                <br/>
+                                <span id="seckill-box"></span>
+                            </h2>
                         </div>
+                    </div>
+                    <div class="col-md-1">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!--登录弹出层 输入电话-->
     <div id="killPhoneModal" class="modal fade">
