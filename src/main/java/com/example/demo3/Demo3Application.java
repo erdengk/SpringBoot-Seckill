@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.example.demo3.mapper")
+@MapperScan("com.example.demo3.redis")
 public class Demo3Application {
 
     public static void main(String[] args) {

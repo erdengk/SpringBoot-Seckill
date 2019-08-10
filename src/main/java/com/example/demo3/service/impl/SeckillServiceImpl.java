@@ -10,6 +10,7 @@ import com.example.demo3.exception.SeckillCloseException;
 import com.example.demo3.exception.SeckillException;
 import com.example.demo3.mapper.SeckillMapper;
 import com.example.demo3.mapper.SuccessKilledMapper;
+import com.example.demo3.redis.RedisDao;
 import com.example.demo3.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,8 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     SuccessKilledMapper successKilledMapper;
 
+    @Autowired
+    RedisDao redisDao;
 
     @Override
     public List<Seckill> findAll() {
@@ -62,11 +65,24 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     @Override
+    //优化暴露接口
     public Exposer exportSeckillUrl(Integer seckillId) {
-        Seckill seckill = seckillMapper.queryById(seckillId);
-        if (seckill == null)
+        //优化点 ： 缓存优化  超时的基础上维护统一性
+        // 1 访问 redis
+        Seckill seckill = redisDao.getSeckill(seckillId);
+        if(seckill == null)
         {
-            return  new Exposer(false,seckillId);
+            //2 访问数据库
+             seckill = seckillMapper.queryById(seckillId);
+            if (seckill == null)
+            {
+                return  new Exposer(false,seckillId);
+            }
+            else
+            {
+//                3 放入 redis
+                redisDao.putSeckill(seckill);
+            }
         }
         Date startTieme = seckill.getStartTime();
         Date endTime = seckill.getEndTime();
@@ -97,18 +113,19 @@ public class SeckillServiceImpl implements SeckillService {
         //执行秒杀逻辑：1.减库存；2.储存秒杀订单
         Date nowTime = new Date();
         try {
-            int updateCount = seckillMapper.reduceNumber(seckillId, nowTime);
-            if (updateCount <= 0) {
-                //没有更新记录，秒杀结束
-                throw new SeckillCloseException("seckill is closed");
-            } else {
-                int insertCount = successKilledMapper.insertSuccessKilled(seckillId, userPhone);
-                if (insertCount <= 0) {
-                    //重复秒杀
+            int insertCount = successKilledMapper.insertSuccessKilled(seckillId, userPhone);
+            if (insertCount <= 0) {
+                //重复秒杀
 //                    throw new RepeatKillException("seckill repeated");
-                    return new SeckillExecution(seckillId, SeckillStatEnum.REPEAT_KILL,"重复秒杀");
+                return new SeckillExecution(seckillId, SeckillStatEnum.REPEAT_KILL,"重复秒杀");
+            } else {
+                // 减库存、热点商品的竞争
+                int updateCount = seckillMapper.reduceNumber(seckillId, nowTime);
+                if (updateCount <= 0) {
+                    //没有更新记录，秒杀结束，rollback
+                    throw new SeckillCloseException("seckill is closed");
                 } else {
-                    //秒杀成功
+                    //秒杀成功 commit
                     SuccessKilled successKilled = successKilledMapper.queryByIdWithSeckill(seckillId, userPhone);
                     return new SeckillExecution(seckillId, SUCCESS,"秒杀成功",successKilled);
                 }
@@ -122,6 +139,11 @@ public class SeckillServiceImpl implements SeckillService {
             //所有编译期异常，转换为运行期异常
             throw new SeckillException("seckill inner error:" + e.getMessage());
         }
+    }
+
+    @Override
+    public SeckillExecution executeSeckillProducedure(Integer seckillId, String userPhone, String md5) throws SeckillException, RepeatKillException, SeckillCloseException {
+        return null;
     }
 
 }

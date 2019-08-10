@@ -6,9 +6,9 @@ import com.example.demo3.dto.Exposer;
 import com.example.demo3.dto.SeckillExecution;
 import com.example.demo3.exception.RepeatKillException;
 import com.example.demo3.exception.SeckillCloseException;
-import com.example.demo3.mapper.EmployeeMapper;
 import com.example.demo3.mapper.SeckillMapper;
 import com.example.demo3.mapper.SuccessKilledMapper;
+import com.example.demo3.redis.RedisDao;
 import com.example.demo3.service.SeckillService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,8 +23,6 @@ import java.util.List;
 @SpringBootTest
 public class Demo3ApplicationTests {
 
-    @Autowired
-    EmployeeMapper employeeMapper;
 
     @Autowired
     SeckillMapper seckillMapper;
@@ -115,7 +113,7 @@ public class Demo3ApplicationTests {
 
     @Test
     public void testSeckillLogic() throws Exception {
-        Exposer exposer = seckillService.exportSeckillUrl(2);
+        Exposer exposer = seckillService.exportSeckillUrl(1);
         if (exposer.isExposed()) {
             Integer id = exposer.getSeckillId();
             String md5 = exposer.getMd5();
@@ -131,5 +129,31 @@ public class Demo3ApplicationTests {
             //秒杀未开启
             System.out.println("秒杀未开启");
         }
+    }
+
+    @Autowired
+    RedisDao redisDao;
+
+    private Integer id =1;
+
+    @Test
+    public void Seckill() {
+//        get and put
+        Seckill seckill = redisDao.getSeckill(id);
+        if (seckill == null)
+        {
+            seckill = seckillMapper.queryById(id);
+            if(seckill != null)
+            {
+                String result = redisDao.putSeckill(seckill);
+                System.out.println(result);
+                seckill = redisDao.getSeckill(id);
+                System.out.println(seckill);
+            }
+        }
+    }
+
+    @Test
+    public void putSeckill() {
     }
 }
