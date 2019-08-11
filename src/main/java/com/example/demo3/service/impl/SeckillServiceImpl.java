@@ -12,6 +12,7 @@ import com.example.demo3.mapper.SeckillMapper;
 import com.example.demo3.mapper.SuccessKilledMapper;
 import com.example.demo3.redis.RedisDao;
 import com.example.demo3.service.SeckillService;
+import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.example.demo3.enums.SeckillStatEnum.SUCCESS;
 
@@ -142,8 +142,34 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     @Override
-    public SeckillExecution executeSeckillProducedure(Integer seckillId, String userPhone, String md5) throws SeckillException, RepeatKillException, SeckillCloseException {
-        return null;
+    public SeckillExecution executeSeckillProducedure(Integer seckillId, String userPhone, String md5) {
+        if (md5 == null || !md5.equals(getMD5(seckillId)))
+        {
+            return  new SeckillExecution(seckillId,SeckillStatEnum.DATA_REWRITE,"数据串改");
+        }
+//        Date killTime = new Date();
+        Date killTime = Calendar.getInstance().getTime();
+        Map<String,Object> map = new HashMap<>();
+        map.put("seckillId",seckillId);
+        map.put(("phone"),userPhone);
+        map.put("killTime",killTime);
+        map.put("result",null);
+        // 执行存储过程，result 被赋值
+        try {
+            seckillMapper.killByProcedure(map);
+            int result = MapUtils.getInteger(map,"result",-2);
+            if (result == 1)
+            {
+                SuccessKilled successKilled = successKilledMapper.queryByIdWithSeckill(seckillId,userPhone);
+                return  new SeckillExecution(seckillId, SUCCESS,"success",successKilled);
+            }
+            else
+            {
+                return  new SeckillExecution(seckillId,SeckillStatEnum.stateOf(result),SeckillStatEnum.stateOf(result).getStateInfo());
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return  new SeckillExecution(seckillId,SeckillStatEnum.INNER_ERROR,"系统错误");
+        }
     }
-
 }

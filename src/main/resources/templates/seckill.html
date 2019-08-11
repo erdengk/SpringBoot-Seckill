@@ -19,7 +19,8 @@
             <div class="col-md-12">
                 <div class="page-header">
                     <h1>
-                        秒杀系统 <small></small>
+                        秒杀系统
+                        <small></small>
                     </h1>
                 </div>
                 <div class="row-fluid">
@@ -27,25 +28,25 @@
                     </div>
                     <div class="col-md-8">
                         <table class="table">
-                            <tr th:each="item :${list}">
-                                <th>
+                            <tr th:each="item :${list}" th:if="${item.number>0}">
+                                <td>
                                     <span th:text="${item.name}"></span>
-                            </th>
-                            <th>
-                                <span>剩余库存： <b class="stock" th:text="${item.number}"></b></span>
-                            </th>
-                            <th>
-                                <a th:href="'/seckill/' + ${item.seckillId} + '/detail'" target="_blank">
-                                    <button style="width:100%" class="btn btn-success">立即抢购</button>
-                            </th>
-                            <th>
-                                <div>
-                                    <span style="float:left;font-size: 13px;">开始时间：[[${#dates.format(item.startTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
-                                </div>
-                                <div>
-                                    <span style="float:left;font-size: 13px;">结束时间：[[${#dates.format(item.endTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
-                                </div>
-                            </th>
+                                </td>
+                                <td>
+                                    <span>剩余库存： <b class="stock" th:text="${item.number}"></b></span>
+                                </td>
+                                <td>
+                                    <a th:href="'/seckill/' + ${item.seckillId} + '/detail'" target="_blank">
+                                        <button style="width:100%" class="btn btn-success">立即抢购</button>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span style="float:left;font-size: 13px;">开始时间：[[${#dates.format(item.startTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+                                    </div>
+                                    <div>
+                                        <span style="float:left;font-size: 13px;">结束时间：[[${#dates.format(item.endTime, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+                                    </div>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -58,10 +59,10 @@
     </div>
 
 
-        <!-- footer -->
-        <div th:replace="public/footer :: footer"></div>
+    <!-- footer -->
+    <div th:replace="public/footer :: footer"></div>
 
-    </div>
+</div>
 </div>
 </body>
 <script type="text/javascript" th:src="@{../../lib/jquery-3.3.1.min.js}"></script>

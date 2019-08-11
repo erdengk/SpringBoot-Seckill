@@ -81,22 +81,25 @@ public class SeckillController {
     public SeckillResult <SeckillExecution> execute(@PathVariable("seckillId") Integer seckillId,
                                                    @PathVariable("md5") String md5,
                                                    @CookieValue(value = "killPhone", required = false) String userPhone) {
-        System.out.println("-------------"+userPhone);
+        //System.out.println("-------------"+userPhone);
         if (userPhone == null) {
             return new SeckillResult<SeckillExecution>(false, "未注册");
         }
         try {
-            SeckillExecution execution = seckillService.executeSeckill(seckillId,userPhone, md5);
-            return new SeckillResult<SeckillExecution>(true, execution);
+            SeckillExecution seckillExecution = seckillService.executeSeckillProducedure(seckillId,userPhone, md5);
+            System.out.println("seckillExecution"+seckillExecution);
+            return new SeckillResult<SeckillExecution>(true, seckillExecution);
         } catch (RepeatKillException e) {
             SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.REPEAT_KILL);
             System.out.println("seckillExecution"+seckillExecution);
             return new SeckillResult<SeckillExecution>(true, seckillExecution);
         } catch (SeckillCloseException e) {
             SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.END);
+            System.out.println("seckillExecution"+seckillExecution);
             return new SeckillResult<SeckillExecution>(true, seckillExecution);
         } catch (SeckillException e) {
             SeckillExecution seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.INNER_ERROR);
+            System.out.println("seckillExecution"+seckillExecution);
             return new SeckillResult<SeckillExecution>(true, seckillExecution);
         }
     }

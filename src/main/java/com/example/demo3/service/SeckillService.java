@@ -61,7 +61,6 @@ public interface SeckillService {
      * @param md5
      * @return
      */
-    SeckillExecution executeSeckillProducedure(Integer seckillId, String userPhone, String md5)
-            throws SeckillException, RepeatKillException, SeckillCloseException;
+    SeckillExecution executeSeckillProducedure(Integer seckillId, String userPhone, String md5);
 
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : dk
@@ -42,4 +43,10 @@ public interface SeckillMapper {
      * @return
      */
     int reduceNumber(@Param("seckillId") long seckillId, @Param("killTime") Date killTime);
+
+    /**
+     * 使用存储过程秒杀
+     * @param objectMap
+     */
+    void killByProcedure(Map<String,Object> objectMap);
 }

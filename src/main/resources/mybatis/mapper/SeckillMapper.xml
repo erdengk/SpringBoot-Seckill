@@ -18,6 +18,15 @@
         SELECT * FROM seckill
     </select>
 
+    <select id="killByProcedure" statementType="CALLABLE">
+        call execute_seckill (
+        #{seckillId,jdbcType=INTEGER,mode=IN},
+        #{phone,jdbcType=VARCHAR,mode=IN},
+        #{killTime,jdbcType=TIMESTAMP,mode=IN},
+        #{result,jdbcType=INTEGER,mode=OUT}
+        )
+    </select>
+
     <update id="reduceNumber">
         UPDATE seckill
         SET number = number-1
@@ -26,5 +35,8 @@
         AND end_time >= #{killTime}
         AND number > 0;
     </update>
+
+<!--    mybatis 调用存储过程-->
+
 
 </mapper>

@@ -154,6 +154,15 @@ public class Demo3ApplicationTests {
     }
 
     @Test
-    public void putSeckill() {
+    public void executeSeckillProducedure() {
+        int seckillId = 1;
+        String phone = "15596520256" ;
+        Exposer exposer = seckillService.exportSeckillUrl(seckillId);
+        if (exposer.isExposed())
+        {
+            String md5 = exposer.getMd5();
+            SeckillExecution seckillExecution = seckillService.executeSeckillProducedure(seckillId, phone, md5);
+            System.out.println(seckillExecution.getStateInfo());
+        }
     }
 }
