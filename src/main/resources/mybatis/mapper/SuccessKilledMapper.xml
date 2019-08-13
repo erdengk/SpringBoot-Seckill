@@ -6,8 +6,8 @@
 
     <insert id="insertSuccessKilled">
         <!--当出现主键冲突时(即重复秒杀时)，会报错;不想让程序报错，加入ignore-->
-        INSERT ignore INTO success_killed(seckill_id,user_phone,state)
-        VALUES (#{seckillId},#{userPhone},0)
+        INSERT ignore INTO success_killed(seckill_id,user_phone,state,create_time)
+        VALUES (#{seckillId},#{userPhone},0,#{createTime})
     </insert>
 
     <select id="queryByIdWithSeckill" resultType="com.example.demo3.bean.SuccessKilled">

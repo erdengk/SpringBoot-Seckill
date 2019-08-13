@@ -52,7 +52,7 @@ public class Demo3ApplicationTests {
 
     @Test
     public void insertSuccessKilled() {
-        int  s = successkilledMapper.insertSuccessKilled(1,"sssss");
+        int  s = successkilledMapper.insertSuccessKilled(1,"s1ssss",new Date());
         System.out.println(s);
 
     }
