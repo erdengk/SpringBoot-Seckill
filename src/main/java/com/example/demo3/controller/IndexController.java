@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @description :
  */
 @Controller
-public class TestController {
+public class IndexController {
     @RequestMapping("/")
     public String s()
     {
         System.out.println(1);
-        return "1";
+        return "seckill";
     }
 }
