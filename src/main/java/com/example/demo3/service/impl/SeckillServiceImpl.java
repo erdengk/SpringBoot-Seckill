@@ -113,6 +113,8 @@ public class SeckillServiceImpl implements SeckillService {
         System.out.println("d");
         //执行秒杀逻辑：1.减库存；2.储存秒杀订单
         Date nowTime = new Date();
+
+
         try {
             int insertCount = successKilledMapper.insertSuccessKilled(seckillId, userPhone,nowTime);
             if (insertCount <= 0) {

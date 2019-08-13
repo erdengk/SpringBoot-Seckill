@@ -1,5 +1,6 @@
 package com.example.demo3.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,11 +11,14 @@ public class Seckill {
   private String name;
   private Integer number;
   @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
   private java.util.Date startTime;
 
   @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
   private java.util.Date endTime;
 
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
   @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
   private java.util.Date createTime;
 

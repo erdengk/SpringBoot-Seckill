@@ -1,5 +1,6 @@
 package com.example.demo3.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +11,8 @@ public class SuccessKilled {
   private String userPhone;
   private Integer state;
   @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
   private java.util.Date createTime;
 
   private Seckill seckill;

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,14 @@ public class Demo3ApplicationTests {
         for (int i = 0; i <seckills.size() ; i++) {
             System.out.println(seckills.get(i).toString());
         }
+    }
+
+    @Test
+    public void queryAllsss() {
+        Date date = new Date();
+        System.out.println(date);
+        date = Calendar.getInstance().getTime();
+        System.out.println(date);
     }
 
     @Autowired
