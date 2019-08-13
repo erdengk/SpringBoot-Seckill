@@ -164,7 +164,7 @@ public class SeckillServiceImpl implements SeckillService {
             if (result == 1)
             {
                 SuccessKilled successKilled = successKilledMapper.queryByIdWithSeckill(seckillId,userPhone);
-                return  new SeckillExecution(seckillId, SUCCESS,"success",successKilled);
+                return  new SeckillExecution(seckillId, SUCCESS,"秒杀成功",successKilled);
             }
             else
             {

@@ -10,6 +10,7 @@ BEGIN
     DECLARE
 	insert_count INT DEFAULT 0;
     START TRANSACTION;
+
     INSERT IGNORE INTO success_killed
      ( seckill_id, user_phone, create_time )
     VALUES
@@ -65,7 +66,7 @@ set @r_result = -3;
 call execute_seckill(1, 11111111118, now(), @r_result);
 
 select @r_result;
--- 获取结果
+-- -- 获取结果
 
 -- 存储过程
 -- 1：存储过程优化：事务行级锁持有时间
