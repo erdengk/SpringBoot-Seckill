@@ -2,16 +2,16 @@
 
 ### **技术栈**
 
-- 后端： SpringBoot-2.x + Redis-4.x
+- 后端： SpringBoot-2.x + Redis-4.x 
 - 前端： Bootstrap + Jquery
 
 ### **测试环境**
 
-- IDEA + Maven-10.13 + Tomcat8 + JDK8
+- IDEA + Maven 3.5.4 + Tomcat8 + JDK8
 
 ### 开发环境
 
-- 语言： JDK1.8
+- 语言： JDK 1.8
 
 - IDE： IDEA 2019.2
 
@@ -22,7 +22,9 @@
 ### **启动说明**
 
   - 启动前，请配置好 `application.properties` 中连接数据库的用户名和密码，以及Redis服务器的地址和端口信息。
-  - 启动前，请创建数据库`seckill`，建表SQL语句放在：**SQL **文件夹中。具体的建表和建库语句请仔细看SQL文件。
+  - 启动前，请创建数据库`seckill`，建表SQL语句放在：SQL文件夹中。具体的建表和建库语句请仔细看SQL文件。
+  - 创建好数据库之后，请执行 SQL 文件夹中的 seckill-transaction.sql 中的存储过程，然后直接进行下面的操作。也可以将 `service.impl.SeckillServiceImpl` 中的144-174 行注释，
+    再将 `controller.SeckillController` 89 行开启注释，关闭90 行的注释，这样也可以正常运行项目。
   - 配置完成后，运行位于 `src\main\java\com\example\demo3`下的SpringbootSeckillApplication中的main方法，访问 `http://localhost:8080/seckill/list` 进行API测试。
   - 注意数据库的sql 数据需要自己添加。
 

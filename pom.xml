@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>demo3</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>demo3</name>
-    <description>Demo project for Spring Boot</description>
+    <version>0.0.1</version>
+    <name>seckill</name>
+    <description>Spring Boot Seckill</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -70,7 +70,7 @@
             <artifactId>druid</artifactId>
             <version>1.1.8</version>
         </dependency>
-
+<!-- redis 相关-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -91,8 +91,7 @@
             <artifactId>protostuff-runtime</artifactId>
             <version>1.0.8</version>
         </dependency>
-
-<!--        MapUtils 引入-->
+<!--        MapUtils 引入 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
