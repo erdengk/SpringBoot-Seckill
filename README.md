@@ -1,5 +1,8 @@
 ## SpringBoot 秒杀项目
 
+### **线上体验地址**
+[Spring Boot秒杀系统](http://106.15.38.234:8000/)
+
 ### **技术栈**
 
 - 后端： SpringBoot-2.x + Redis-4.x 
